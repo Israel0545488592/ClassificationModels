@@ -11,8 +11,8 @@ class Winnow:
     def predict(self, vector: np.ndarray) -> bool:
 
 
-        if self.weights is None:                            raise RuntimeError('Model has not been trained yet')
-        if len(self.weights) != len(vector):                raise RuntimeError('Instance is of the wrong format')
+        if self.weights is None:                  raise RuntimeError('Model has not been trained yet')
+        if len(self.weights) != len(vector):      raise RuntimeError('Instance is of the wrong format')
 
         return self.weights @ vector.astype(int) >= len(self.weights) // 2
 
