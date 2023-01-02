@@ -54,5 +54,5 @@ class Winnow:
 if __name__ == '__main__':
 
     winnow = Winnow()
-    print(winnow.train('winnow_vectors.txt'))
-    print(winnow.weights)
+    print('mistake count:', winnow.train('winnow_vectors.txt'))
+    print('final weights:', winnow.weights)
