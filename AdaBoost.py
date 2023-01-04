@@ -16,7 +16,7 @@ def orgenize_data(data: np.ndarray) -> Tuple[np.ndarray]:
 
 
 class AdaBoost:
-
+    
     ''' The Adaptive Boosting huristic for 2D lines'''
 
     def __init__(self) -> None:
@@ -28,8 +28,9 @@ class AdaBoost:
 
         def __init__(self, x1: int, x2: int, y1: int, y2: int) -> None:
 
+            # vertical line
             if abs(x1 - x2) < 0.01:
-                # vertical line
+
                 self.slope = None
                 self.height = x1
 
@@ -79,25 +80,10 @@ class AdaBoost:
 
     def classify(self, x: int, y: int) -> bool:
 
-        if len(self.rules) == 0: raise RuntimeError(' mpdel has not been trained yet')
+        if len(self.rules) == 0: raise RuntimeError(' model has not been trained yet')
 
-        return sum(self.rules[rule] * (1 if rule.classify(x, y) else -1) for rule in self.rules) > 0
+        return sum(self.rules[rule] * (1 if rule.classify(x, y) else -1) for rule in self.rules) >= 0
 
     def test(self, data: np.ndarray, labels: np.ndarray) -> float:
 
-        return sum(self.classify(dot[0], dot[1]) == label  for dot, label in zip(data, labels)) / len(data)
-
-
-
-if __name__ == '__main__':
-
-    Data = np.loadtxt('squares.txt')
-
-    train_data, train_labels, test_data, test_labels = orgenize_data(Data)
-
-    adaboost = AdaBoost()
-
-    adaboost.train(train_data, train_labels, 50)
-
-    print('train score:', adaboost.test(train_data, train_labels))
-    print('test score:', adaboost.test(test_data, test_labels))
+        return sum(self.classify(dot[0], dot[1]) is label  for dot, label in zip(data, labels)) / len(data)
